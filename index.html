@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="rocket, pool, rpl, staking, eth, node, validator, rewards, value">
+    <meta name="description" content="Speculative calculator for Rocket Pool node revenue and RPL value.">
+    <title>Rocket Pool Tool</title>
+
+    <link rel="dns-prefetch" href="//www.rocketpooltool.com">
+    <link rel="canonical" href="https://rocketpooltool.com">
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <link rel="shortcut icon" href="assets/img/favicon.ico">
+
+    <meta name="msapplication-TileColor" content="#fff">
+    <meta name="theme-color" content="#fff">
+    <meta property="og:locale" content="en-US">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Rocket Pool Tool">
+    <meta property="og:description" content="Speculative calculator for Rocket Pool node revenue and RPL value.">
+    <meta property="og:url" content="https://rocketpooltool.com">
+    <meta property="og:site_name" content="Rocket Pool Tool">
+    <meta property="og:image" content="https://rocketpooltool.com/assets/img/logo.png">
+    <meta property="og:image:secure_url" content="https://rocketpooltool.com/assets/img/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="Speculative calculator for Rocket Pool node revenue and RPL value.">
+    <meta name="twitter:title" content="Rocket Pool Tool">
+    <meta name="twitter:image" content="https://rocketpooltool.com/assets/img/logo.png">
+    <meta name="twitter:image:alt" content="Rocket Pool Tool">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">    
+    <!-- Custom CSS -->
+    <style type="text/css">
+      .btn-primary {
+         /*background-color: #ff936e; */
+        background-color: #fd7a63;
+        border-color: #fd7a63;
+      }
+      .btn-primary:hover,
+      .btn-primary:focus {
+        background-color: #fb694f;
+        border-color: #fd7a63;
+      }
+    </style> 
+  </head>
+  <body>
+
+    <!-- Nav -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="assets/img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+          Rocket Pool Tool
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown me-3">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Resources
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="https://www.rocketpool.net/">Website</a></li>
+                <li><a class="dropdown-item" href="https://beta.rocketpool.net/">Beta Site</a></li>
+                <li><a class="dropdown-item" href="https://www.rocketpool.net/#roadmap">Roadmap</a></li>
+                <li><a class="dropdown-item" href="https://www.rocketpool.net/files/RocketPoolWhitePaper.pdf">Whitepaper</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown me-3">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Learn
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="https://medium.com/rocket-pool/rocket-pool-101-faq-ee683af10da9">FAQ</a></li>
+                <li><a class="dropdown-item" href="https://rocket-pool.readthedocs.io/en/latest/rocket-pool/introduction.html">Technical Docs</a></li>
+                <li><a class="dropdown-item" href="https://medium.com/rocket-pool/rocket-pool-staking-protocol-part-1-8be4859e5fbd">Staking Protocol Pt 1</a></li>
+                <li><a class="dropdown-item" href="https://medium.com/rocket-pool/rocket-pool-staking-protocol-part-2-e0d346911fe1">Staking Protocol Pt 2</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown me-3">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Follow
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="https://medium.com/rocket-pool">News</a></li>
+                <li><a class="dropdown-item" href="https://discordapp.com/invite/tCRG54c">Discord</a></li>
+                <li><a class="dropdown-item" href="https://twitter.com/Rocket_Pool">Twitter</a></li>
+                <li><a class="dropdown-item" href="https://github.com/rocket-pool/rocketpool">Github</a></li>
+                <li><a class="dropdown-item" href="https://dao.rocketpool.net/">Forum</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown me-3">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                RPL Thesis
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="https://www.reddit.com/r/ethfinance/comments/m3pug8/the_rocket_pool_investment_thesis/">Thesis 1</a></li>
+                <li><a class="dropdown-item" href="https://www.reddit.com/r/ethtrader/comments/m43r38/the_rocket_pool_investment_thesis_speculative/">Thesis 2</a></li>
+                <li><a class="dropdown-item" href="https://www.reddit.com/r/ethfinance/comments/m4jj0i/rocketpool_investment_thesis_round_3/">Thesis 3</a></li>
+              </ul>
+            </li>
+          </ul>
+          <a class="btn btn-primary" href="https://discordapp.com/invite/tCRG54c">Chat</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Preface -->
+    <div class="container mt-4 mt-md-5">
+      <p>Below are a set of speculative tools to help <em>estimate</em> Rocket Pool node operator rewards, as well as <em>potential</em> RPL value. To get an idea of what good projections would be, community members have created a few thesis posts that are linked in the menu.</p>
+      <p>This is not financial advice and you should follow up with your own research.</p>
+      <small>
+        <ul>
+          <li>Node Requirement: 16 ETH + minimum of 1.6 ETH worth of RPL (10%)</li>
+          <li>Max collateral is 24 ETH worth of RPL per node (150%)</li>
+          <li>More RPL collateral results in higher RPL staking rewards</li>
+          <!-- <li>Revenue: 16 ETH staking rewards + 16 ETH staking pool commission + RPL staking rewards</li> -->
+          <li>Revenue: 
+            <ul>
+              <li>16 ETH staking rewards</li>
+              <li>16 ETH staking pool commission (5% minimum)</li>
+              <li>RPL staking rewards</li>
+            </ul>
+          </li>
+          <li>Staking pool commission is variable with a minimum of 5% set by the protocol</li>
+        </ul>
+      </small>
+    </div>
+
+    <!-- Tab Section -->
+    <div class="container mt-4">
+
+      <!-- Tab Nav -->
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="revenue-tab" data-bs-toggle="tab" data-bs-target="#revenue" type="button" role="tab" aria-controls="revenue" aria-selected="true">Node Revenue</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link wait4load" id="value-tab" data-bs-toggle="tab" data-bs-target="#value" type="button" role="tab" aria-controls="value" aria-selected="false" disabled>RPL Value (Coming)</button>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="myTabContent">
+
+        <!-- Revenue Tab -->
+        <div class="tab-pane fade show active mt-3" id="revenue" role="tabpanel" aria-labelledby="revenue-tab">
+          <form>
+            <div class="mb-2">
+              <label for="percentStaking" class="form-label">
+                % of ETH Staking <small>(<span id="ethAmountStaking">4</span>M ETH)</small>
+              </label>
+              <input type="number" class="form-control" id="percentStaking" value="3.5" 
+                onchange="updatedPercentStaking()" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+            </div>
+            <div class="mb-2">
+              <label for="networkPoolCount" class="form-label">
+                # of Rocket Pool Nodes <small>(<span id="networkPercentPools">5</span>% of Network)</small>
+              </label>
+              <input type="number" class="form-control" id="networkPoolCount" value="6250" 
+                onchange="updatedNetworkPoolCount()" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+            </div>
+            <div class="mb-2">
+              <label for="userNodeCount" class="form-label">
+                # of Pools You Operate <small>(<span id="userEthTotal">32</span> ETH Total)</small>
+              </label>
+              <input type="number" class="form-control" id="userNodeCount" value="2" 
+                onchange="updatedUserNodeCount()" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+            </div>
+            <div class="mb-2">
+              <label for="networkCollateralPercent" class="form-label mb-1">
+                Rocket Pool Average RPL Collateral % <small>(Min 10%, Max 150%)</small>
+              </label>
+              <input type="number" class="form-control" id="networkCollateralPercent" value="20"
+                onchange="updatedNetworkCollateralPercent()" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+            </div>
+            <div class="mb-2">
+              <label for="userCollateralPercent" class="form-label mb-1">
+                Your RPL Collateral % Per Node <small>(<span id="userRplTotal">841</span> RPL Total)</small>
+              </label>
+              <input type="number" class="form-control" id="userCollateralPercent" value="20"
+                onchange="updatedUserCollateralPercent()" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+            </div>
+            <div class="mb-2">
+              <label for="ethPrice" class="form-label">
+                ETH USD Price
+              </label>
+              <input type="number" class="form-control" id="ethPrice" value="2100"
+                onchange="updatedEthPrice()" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+            </div>
+            <div class="mb-2">
+              <label for="rplPrice" class="form-label">
+                RPL USD Price <small>(<span id="rplEthRatio">0.0076</span> ETH Ratio)</small>
+              </label>
+              <input type="number" class="form-control" id="rplPrice" value="16"
+                onchange="updatedRplPrice()" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+            </div>
+            <div class="d-grid gap-2 my-3">
+              <input type="button" class="btn btn-primary" value="Calculate" onclick="calculateRevenue(true)">
+            </div>
+          </form>
+          <div class="pt-3 mt-3 border-top">
+            <h2 class="h5 text-capitalize">Results</h2>
+            <p id="revenueResults" class="pb-5"></p>
+          </div>
+        </div>
+
+        <!-- Value Tab -->
+        <div class="tab-pane fade mt-3" id="value" role="tabpanel" aria-labelledby="value-tab">
+          
+          <div class="pt-3 mt-3 border-top">
+            <h2 class="h6 text-capitalize">Results</h2>
+            <p id="valueResults" class="pb-5"></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="container">
+      <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md">
+            <img class="mb-2" src="https://pbs.twimg.com/profile_images/1006760935669805056/YsOFyk-p_400x400.jpg" alt="" width="75" height="75">
+            <small class="d-block mb-3 text-muted">Rocket Pool</small>
+          </div>
+          <div class="col-12 col-md">
+            <h5>Resources</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="https://www.rocketpool.net/">Website</a></li>
+              <li><a class="text-muted" href="https://beta.rocketpool.net/">Beta Site</a></li>
+              <li><a class="text-muted" href="https://www.rocketpool.net/#roadmap">Roadmap</a></li>
+              <li><a class="text-muted" href="https://www.rocketpool.net/files/RocketPoolWhitePaper.pdf">Whitepaper</a></li>
+            </ul>
+          </div>
+          <div class="col-12 col-md">
+            <h5>Learn</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="https://medium.com/rocket-pool/rocket-pool-101-faq-ee683af10da9">FAQ</a></li>
+              <li><a class="text-muted" href="https://rocket-pool.readthedocs.io/en/latest/rocket-pool/introduction.html">Technical Docs</a></li>
+              <li><a class="text-muted" href="https://medium.com/rocket-pool/rocket-pool-staking-protocol-part-1-8be4859e5fbd">Staking Protocol Pt 1</a></li>
+              <li><a class="text-muted" href="https://medium.com/rocket-pool/rocket-pool-staking-protocol-part-2-e0d346911fe1">Staking Protocol Pt 2</a></li>
+            </ul>
+          </div>
+          <div class="col-12 col-md">
+            <h5>Follow</h5>
+            <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="https://medium.com/rocket-pool">News</a></li>
+              <li><a class="text-muted" href="https://discordapp.com/invite/tCRG54c">Discord</a></li>
+              <li><a class="text-muted" href="https://twitter.com/Rocket_Pool">Twitter</a></li>
+              <li><a class="text-muted" href="https://github.com/rocket-pool/rocketpool">Github</a></li>
+              <li><a class="text-muted" href="https://dao.rocketpool.net/">Forum</a></li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <!-- Custom JS -->
+    <script>
+      var ethSupply = 115000000;
+      var rplSupply = 16000000;
+      window.onload = getData().then(load);
+
+      async function getData() {
+        const [ethResponse, rplResponse] = await Promise.all([
+          fetch('https://api.coingecko.com/api/v3/coins/ethereum'),
+          fetch('https://api.coingecko.com/api/v3/coins/rocket-pool')
+        ]);
+        const ethJson = await ethResponse.json();
+        const rplJson = await rplResponse.json();
+        var ethPrice = ethJson["market_data"]["current_price"]["usd"];
+        ethSupply = ethJson["market_data"]["circulating_supply"];
+        var rplPrice = rplJson["market_data"]["current_price"]["usd"];
+        rplSupply = rplJson["market_data"]["circulating_supply"];
+        document.getElementById("ethPrice").value = ethPrice;
+        document.getElementById("rplPrice").value = rplPrice;
+        updateRplEthRatio();
+        updateUserRplTotal();
+      }
+      function load() {
+        calculateRevenue(false);
+        updateLinkTargets();
+      }
+
+      // Check & Updates
+      function updatedPercentStaking() {
+        var percentStaking = document.getElementById("percentStaking").value;
+        // if (percentStaking < 0.01) { 
+          // percentStaking = 0.01;
+        if (percentStaking < 0) { 
+          percentStaking = 0;
+          document.getElementById("percentStaking").value = percentStaking;
+        } else if (percentStaking > 100) { 
+          percentStaking = 100;
+          document.getElementById("percentStaking").value = percentStaking;
+        }
+        updateEthAmountStaking();
+      }
+      function updatedNetworkPoolCount() {
+        var percentStaking = document.getElementById("percentStaking").value;
+        var ethAmountStaking = (percentStaking/100)*ethSupply;
+        var networkValidatorCount = Math.round( ethAmountStaking/32 );
+        var networkPoolCount = document.getElementById("networkPoolCount").value;
+        // if (networkPoolCount < 1) {
+          // networkPoolCount = 1;
+        if (networkPoolCount < 0) {
+          networkPoolCount = 0;
+        }
+        document.getElementById("networkPoolCount").value = Math.round( networkPoolCount );
+        updateNetworkPercentPools();
+      }
+      function updatedUserNodeCount() {
+        var userNodeCount = document.getElementById("userNodeCount").value;
+        // if (userNodeCount < 1) {
+          // userNodeCount = 1;
+        if (userNodeCount < 0) {
+          userNodeCount = 0;
+        }
+        document.getElementById("userNodeCount").value = Math.round( userNodeCount );
+        updateUserEthTotal();
+      }
+      function updatedNetworkCollateralPercent() {
+        var networkCollateralPercent = document.getElementById("networkCollateralPercent").value;
+        // if (networkCollateralPercent < 10) {
+          // networkCollateralPercent = 10;
+        if (networkCollateralPercent < 0) {
+          networkCollateralPercent = 0;
+          document.getElementById("networkCollateralPercent").value = networkCollateralPercent;
+        // } else if (networkCollateralPercent < 10) {
+          // alert("The minimum \"Rocket Pool Average RPL Collateral %\" is 10");
+        } else if (networkCollateralPercent > 150) {
+          networkCollateralPercent = 150;
+          document.getElementById("networkCollateralPercent").value = networkCollateralPercent;
+        }
+      }
+      function updatedUserCollateralPercent() {
+        // var userNodeCount = document.getElementById("userNodeCount").value;
+        var userEthTotal = document.getElementById("userEthTotal").innerHTML;
+        var rplEthRatio = document.getElementById("rplEthRatio").innerHTML;
+        var userCollateralPercent = document.getElementById("userCollateralPercent").value;
+        // if (userCollateralPercent < 10) {
+          // userCollateralPercent = 10;
+        if (userCollateralPercent < 0) {
+          userCollateralPercent = 0;
+          document.getElementById("userCollateralPercent").value = userCollateralPercent;
+        } else if (userCollateralPercent > 150) {
+          userCollateralPercent = 150;
+          document.getElementById("userCollateralPercent").value = userCollateralPercent;
+        }
+        updateUserRplTotal();
+      }
+      function updatedEthPrice() {
+        var ethPrice = document.getElementById("ethPrice").value;
+        // if (ethPrice < 0.01) {
+          // ethPrice = 0.01
+        if (ethPrice < 0) {
+          ethPrice = 0
+          document.getElementById("ethPrice").value = ethPrice;
+        }
+        updateRplEthRatio();
+        updateUserRplTotal();
+      }
+      function updatedRplPrice() {
+        var ethPrice = document.getElementById("ethPrice").value;
+        var rplPrice = document.getElementById("rplPrice").value;
+        // if (rplPrice < 0.01) {
+          // rplPrice = 0.01;
+        if (rplPrice < 0) {
+          rplPrice = 0;
+          document.getElementById("rplPrice").value = rplPrice;
+        }
+        updateRplEthRatio();
+        updateUserRplTotal();
+      }
+
+      // Updaters
+      function updateEthAmountStaking() {
+        var percentStaking = document.getElementById("percentStaking").value;
+        var ethAmountStaking = Math.round( (percentStaking/100)*ethSupply/100000 )/10;
+        document.getElementById("ethAmountStaking").innerHTML = ethAmountStaking;
+      }
+      function updateNetworkPercentPools() {
+        var percentStaking = document.getElementById("percentStaking").value;
+        var ethAmountStaking = (percentStaking/100)*ethSupply;
+        var networkValidatorCount = Math.round( ethAmountStaking/32 );
+        var networkPoolCount = document.getElementById("networkPoolCount").value;
+        var networkPercentPools = Math.round( networkPoolCount/networkValidatorCount*100 );
+        document.getElementById("networkPercentPools").innerHTML = networkPercentPools;
+      }
+      function updateUserEthTotal() {
+        var userNodeCount = document.getElementById("userNodeCount").value;
+        var userEthTotal = userNodeCount*16;
+        document.getElementById("userEthTotal").innerHTML = userEthTotal;
+      }
+      function updateUserRplTotal() {
+        var userEthTotal = document.getElementById("userEthTotal").innerHTML;
+        var userCollateralPercent = document.getElementById("userCollateralPercent").value;
+        var ethPrice = document.getElementById("ethPrice").value;
+        var rplPrice = document.getElementById("rplPrice").value;
+        var userRplTotal = Math.round( userEthTotal*(userCollateralPercent/100)/(rplPrice/ethPrice) );
+        document.getElementById("userRplTotal").innerHTML = userRplTotal;
+      }
+      function updateRplEthRatio() {
+        var ethPrice = document.getElementById("ethPrice").value;
+        var rplPrice = document.getElementById("rplPrice").value;
+        var rplEthRatio = Math.round( (rplPrice/ethPrice)*10000 )/10000;
+        document.getElementById("rplEthRatio").innerHTML = rplEthRatio;
+      }
+
+      // Calculate
+      function calculateRevenue(scrollToResult) {
+        var ethAmountStaking = document.getElementById("ethAmountStaking").innerHTML;
+        var percentStaking = document.getElementById("percentStaking").value; // 3.5
+        var networkPercentPools = document.getElementById("networkPercentPools").innerHTML;
+        var networkPoolCount = document.getElementById("networkPoolCount").value; // 6250
+        var userEthTotal = document.getElementById("userEthTotal").innerHTML;
+        var userNodeCount = document.getElementById("userNodeCount").value; // 1
+        var networkCollateralPercent = document.getElementById("networkCollateralPercent").value; // 20
+        var userRplTotal = document.getElementById("userRplTotal").innerHTML;
+        var userCollateralPercent = document.getElementById("userCollateralPercent").value; // 20
+        var ethPrice = document.getElementById("ethPrice").value;
+        var rplEthRatio = document.getElementById("rplEthRatio").innerHTML;
+        var rplPrice = document.getElementById("rplPrice").value;
+
+        if (percentStaking == 0) {
+          return alert("The \"% of ETH Staking\" value can not be 0")
+        }
+        if (networkPoolCount < 1) {
+          return alert("The minimum \"# of Rocket Pool Nodes\" value is 1")
+        }
+        if (userNodeCount < 1) {
+          return alert("The minimum \"# of Pools You Operate\" value is 1")
+        }
+        if (networkCollateralPercent < 10) {
+          return alert("The minimum \"Rocket Pool Average RPL Collateral %\" value is 10");
+        }
+        if (userCollateralPercent < 10) {
+          return alert("The minimum \"Your RPL Collateral % Per Node\" value is 10");
+        }
+        if (ethPrice == 0) {
+          return alert("The \"ETH USD Price\" value can not be 0")
+        }
+        if (rplPrice == 0) {
+          return alert("The \"RPL USD Pric\" value can not be 0")
+        }
+
+        
+        var rplLockupAmount = Math.round( networkPoolCount*16*(networkCollateralPercent/100)*ethPrice/rplPrice );
+        var rplLockupPercent = Math.round( rplLockupAmount/rplSupply*100 );
+        var ethTlv = networkPoolCount*32*ethPrice;
+        var rplTlv = rplLockupAmount*rplPrice
+        var totalTlv = ethTlv + rplTlv;
+        var ethNetworkApr = 16632/Math.sqrt( percentStaking/100*ethSupply )/100;
+        var ethStakingReward = Math.round( ethNetworkApr*userEthTotal*10000 )/10000;
+        var ethSoloStakingReward = ethStakingReward;
+        var usdSoloStakingReward = Math.round( ethSoloStakingReward*ethPrice );
+        var usdSoloPrinciple = userEthTotal*ethPrice;
+
+        var commission5Percent = Math.round( ethNetworkApr*userEthTotal*0.05*10000 )/10000;
+        var commission20Percent = Math.round( ethNetworkApr*userEthTotal*0.2*10000 )/10000;
+        var rplInflation = 0.05;
+        var rplStakingDistributionPercentage = 0.65; // what % of the network inflation is distributed as staking rewards
+        var totalNetworkRplStaked = networkPoolCount*16*(networkCollateralPercent/100)/rplEthRatio;
+        var rplNetworkStakingRewards = rplSupply*rplInflation*rplStakingDistributionPercentage;
+        var rplRewards = Math.round( userRplTotal/totalNetworkRplStaked*rplNetworkStakingRewards*100 )/100;
+        var usdUserPrinciple = (userEthTotal*ethPrice) + (userRplTotal*rplPrice);
+
+        var totalRevenueLower = Math.round( ethPrice*(ethStakingReward+commission5Percent) + rplPrice*rplRewards);
+        var totalRevenueUpper = Math.round( ethPrice*(ethStakingReward+commission20Percent) + rplPrice*rplRewards);
+        var roiSolo = Math.round( usdSoloStakingReward/usdSoloPrinciple*1000 )/10;
+        var roiPoolLower = Math.round( totalRevenueLower/usdUserPrinciple*1000 )/10;
+        var roiPoolUpper = Math.round( totalRevenueUpper/usdUserPrinciple*1000 )/10;
+        var percentDiffLower = Math.round( (totalRevenueLower-usdSoloStakingReward)/usdSoloStakingReward*100 );
+        var percentDiffUpper = Math.round( (totalRevenueUpper-usdSoloStakingReward)/usdSoloStakingReward*100 );
+
+        var results = `
+        Operating a Rocket Pool node will earn you <strong>${percentDiffLower}%-${percentDiffUpper}% more revenue</strong> than solo staking under these conditions!<br>
+        <br>
+        <strong>Normal Node Operator Revenue (1 Year)</strong><br>
+        ETH Staking Rewards: ${ethSoloStakingReward} ETH<br>
+        Total Revenue USD: $${addCommas(usdSoloStakingReward)}<br>
+        ROI: ${roiSolo}%<br>
+        <br>
+        <strong>Rocket Pool Node Operator Revenue (1 Year)</strong><br>
+        ETH Staking Rewards: ${ethStakingReward} ETH<br>
+        ETH Commission @5% (minimum): ${commission5Percent} ETH<br>
+        ETH Commission @20%: ${commission20Percent} ETH<br>
+        RPL Staking Rewards: ${rplRewards} RPL<br>
+        Total Revenue USD: $${addCommas(totalRevenueLower)} - $${addCommas(totalRevenueUpper)}<br>
+        ROI: ${roiPoolLower}%-${roiPoolUpper}%`;
+        var revenueResults = document.getElementById("revenueResults");
+        revenueResults.innerHTML = results;
+
+        if (scrollToResult) {
+          scrollToDiv('revenueResults');
+        }
+      }
+
+      // Utilities
+      function scrollToDiv(id) {
+        var div = document.getElementById(id);
+        var yOffset = div.getBoundingClientRect().top + window.pageYOffset + 0;
+        window.scrollTo({top: yOffset, behavior: 'smooth'});
+      }
+      function enableElements() {
+        var elements = document.getElementsByClassName('wait4load');
+        for(var element in elements) {
+          elements[element].disabled = false;
+        }
+      }
+      function addCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+      function updateLinkTargets() {
+        // open external links and pdfs in new tab
+        var links = document.getElementsByTagName("a");
+        for (var link in links) {
+          // set all links to open in new tab
+          if (/^(https?:)?\/\//.test(links[link].getAttribute("href"))) {
+            links[link].target = "_blank";
+          }
+          // if current domain, use same tab
+          if (/^(https?:\/\/rocketpooltool\.com\/?)$/.test(links[link].getAttribute("href"))) {
+            links[link].target = "_self";
+          }
+          // open all pdfs in new tab
+          if (/(\.pdf)/.test(links[link].getAttribute("href"))) {
+            links[link].target = "_blank";
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
