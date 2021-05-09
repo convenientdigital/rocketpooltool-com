@@ -7,7 +7,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-995WT3CPNY');
     </script>
 
@@ -136,10 +135,6 @@
     <!-- Nav -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
-        <a class="navbar-brand d-none" href="/">
-          <img src="assets/img/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-          Rocket Pool Tool
-        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -204,7 +199,6 @@
       <div class="text-center">
         <h1 class="display-6 fw-bold mb-3">Revenue Estimator</h1>
         <p class="col-md-10 col-lg-8 mx-auto lead">
-          <!-- Rocket Pool is the most decentralized Ethereum staking infrastructure, comprised of stakers and node operators. -->
           A speculative tool to help estimate Rocket Pool node operator rewards.
         </p>
         <small><em>This is not financial advice and you should follow up with your own research.</em></small>
@@ -220,7 +214,6 @@
             <li>Node Requirement: 16 ETH + minimum of 1.6 ETH worth of RPL (10%)</li>
             <li>Max collateral is 24 ETH worth of RPL per node (150%)</li>
             <li>More RPL collateral results in higher RPL staking rewards</li>
-            <!-- <li>Revenue: 16 ETH staking rewards + 16 ETH staking pool commission + RPL staking rewards</li> -->
             <li>Revenue: 
               <ul>
                 <li>16 ETH staking rewards</li>
@@ -406,7 +399,6 @@
         updateUserRplTotal();
       }
       function load() {
-        // checkNotification();
         calculateRevenue(false);
         updateLinkTargets();
       }
@@ -414,8 +406,6 @@
       // Checks & Updates
       function updatedPercentStaking() {
         let percentStaking = document.getElementById("percentStaking").value;
-        // if (percentStaking < 0.01) { 
-          // percentStaking = 0.01;
         if (percentStaking < 0) { 
           percentStaking = 0;
           document.getElementById("percentStaking").value = percentStaking;
@@ -430,8 +420,6 @@
         const ethAmountStaking = (percentStaking/100)*ethSupply;
         const networkValidatorCount = Math.round( ethAmountStaking/32 );
         const networkPoolCount = document.getElementById("networkPoolCount").value;
-        // if (networkPoolCount < 1) {
-          // networkPoolCount = 1;
         if (networkPoolCount < 0) {
           networkPoolCount = 0;
         }
@@ -440,8 +428,6 @@
       }
       function updatedUserNodeCount() {
         let userNodeCount = document.getElementById("userNodeCount").value;
-        // if (userNodeCount < 1) {
-          // userNodeCount = 1;
         if (userNodeCount < 0) {
           userNodeCount = 0;
         }
@@ -451,25 +437,18 @@
       }
       function updatedNetworkCollateralPercent() {
         let networkCollateralPercent = document.getElementById("networkCollateralPercent").value;
-        // if (networkCollateralPercent < 10) {
-          // networkCollateralPercent = 10;
         if (networkCollateralPercent < 0) {
           networkCollateralPercent = 0;
           document.getElementById("networkCollateralPercent").value = networkCollateralPercent;
-        // } else if (networkCollateralPercent < 10) {
-          // alert("The minimum \"Rocket Pool Average RPL Collateral %\" is 10");
         } else if (networkCollateralPercent > 150) {
           networkCollateralPercent = 150;
           document.getElementById("networkCollateralPercent").value = networkCollateralPercent;
         }
       }
       function updatedUserCollateralPercent() {
-        // const userNodeCount = document.getElementById("userNodeCount").value;
         const userEthTotal = document.getElementById("userEthTotal").innerHTML;
         const rplEthRatio = document.getElementById("rplEthRatio").innerHTML;
         let userCollateralPercent = document.getElementById("userCollateralPercent").value;
-        // if (userCollateralPercent < 10) {
-          // userCollateralPercent = 10;
         if (userCollateralPercent < 0) {
           userCollateralPercent = 0;
           document.getElementById("userCollateralPercent").value = userCollateralPercent;
@@ -481,8 +460,6 @@
       }
       function updatedEthPrice() {
         let ethPrice = document.getElementById("ethPrice").value;
-        // if (ethPrice < 0.01) {
-          // ethPrice = 0.01
         if (ethPrice < 0) {
           ethPrice = 0
           document.getElementById("ethPrice").value = ethPrice;
@@ -493,8 +470,6 @@
       function updatedRplPrice() {
         const ethPrice = document.getElementById("ethPrice").value;
         let rplPrice = document.getElementById("rplPrice").value;
-        // if (rplPrice < 0.01) {
-          // rplPrice = 0.01;
         if (rplPrice < 0) {
           rplPrice = 0;
           document.getElementById("rplPrice").value = rplPrice;
@@ -540,14 +515,14 @@
       // Calculate
       function calculateRevenue(scrollToResult) {
         const ethAmountStaking = document.getElementById("ethAmountStaking").innerHTML;
-        const percentStaking = document.getElementById("percentStaking").value; // 3.5
+        const percentStaking = document.getElementById("percentStaking").value;
         const networkPercentPools = document.getElementById("networkPercentPools").innerHTML;
-        const networkPoolCount = document.getElementById("networkPoolCount").value; // 6250
+        const networkPoolCount = document.getElementById("networkPoolCount").value;
         const userEthTotal = document.getElementById("userEthTotal").innerHTML;
-        const userNodeCount = document.getElementById("userNodeCount").value; // 1
-        const networkCollateralPercent = document.getElementById("networkCollateralPercent").value; // 20
+        const userNodeCount = document.getElementById("userNodeCount").value;
+        const networkCollateralPercent = document.getElementById("networkCollateralPercent").value;
         const userRplTotal = document.getElementById("userRplTotal").innerHTML;
-        const userCollateralPercent = document.getElementById("userCollateralPercent").value; // 20
+        const userCollateralPercent = document.getElementById("userCollateralPercent").value;
         const ethPrice = document.getElementById("ethPrice").value;
         const rplEthRatio = document.getElementById("rplEthRatio").innerHTML;
         const rplPrice = document.getElementById("rplPrice").value;
