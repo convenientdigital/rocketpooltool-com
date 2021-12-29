@@ -114,7 +114,6 @@
                 <li><a class="dropdown-item" href="{{site.discord_invite}}">Discord</a></li>
                 <li><a class="dropdown-item" href="https://twitter.com/Rocket_Pool">Twitter</a></li>
                 <li><a class="dropdown-item" href="https://medium.com/rocket-pool">Medium</a></li>
-                <!-- <li><a class="dropdown-item" href="https://t.me/rocketpoolnews">Telegram</a></li> -->
                 <li><a class="dropdown-item" href="https://www.reddit.com/r/rocketpool">Reddit</a></li>
                 <li><a class="dropdown-item" href="https://t.me/rocketpoolnews">Telegram</a></li>
                 <li><a class="dropdown-item" href="https://github.com/rocket-pool/rocketpool">Github</a></li>
@@ -125,7 +124,7 @@
               <a class="nav-link me-3" href="https://fervent-curie-5c2bfc.netlify.app/thesis/">RPL Thesis</a>
             </li>
           </ul>
-          <a class="btn btn-primary" href="https://discordapp.com/invite/tCRG54c">Chat</a>
+          <a class="btn btn-primary" href="https://discordapp.com/invite/tCRG54c">Discord</a>
         </div>
       </div>
     </nav>
@@ -321,14 +320,21 @@
 
 
       async function getData() {
-        const [ethResponse, rplResponse, statsResponse] = await Promise.all([
+        const [ethResponse, rplResponse, statsResponse, validatorResponse] = await Promise.all([
           fetch("https://api.coingecko.com/api/v3/coins/ethereum"),
           fetch("https://api.coingecko.com/api/v3/coins/rocket-pool"),
           fetch("https://api.rocketpooldata.com/v1/node/stats")
         ]);
+        // const [ethResponse, rplResponse, statsResponse, validatorResponse] = await Promise.all([
+        //   fetch("https://api.coingecko.com/api/v3/coins/ethereum"),
+        //   fetch("https://api.coingecko.com/api/v3/coins/rocket-pool"),
+        //   fetch("https://api.rocketpooldata.com/v1/node/stats"),
+        //   fetch("https://beaconcha.in/index/data")
+        // ]);
         const ethJson = await ethResponse.json();
         const rplJson = await rplResponse.json();
         const statsJson = await statsResponse.json();
+        // const validatorJson = await validatorResponse.json();
         const ethPrice = ethJson["market_data"]["current_price"]["usd"];
         ethSupply = ethJson["market_data"]["circulating_supply"];
         const rplPrice = rplJson["market_data"]["current_price"]["usd"];
@@ -337,14 +343,18 @@
         const rplStaked = statsJson["rplStaked"];
         const rplPriceInEth = statsJson["rplPriceInEth"];
         const aveCollateral = Math.round( rplStaked/totalMinipools*rplPriceInEth/1e36/16*10000 )/100;
+        // const validators = validatorJson["active_validators"];
+        // const percentStaking = Math.round( validators*32/ethSupply*10000 )/100;
         document.getElementById("ethPrice").value = ethPrice;
         document.getElementById("rplPrice").value = rplPrice;
         document.getElementById("networkPoolCount").value = totalMinipools;
         document.getElementById("networkCollateralPercent").value = aveCollateral;
+        // document.getElementById("percentStaking").value = percentStaking;
         updateRplEthRatio();
         updateUserRplTotal();
         updatedNetworkPoolCount();
         updatedNetworkCollateralPercent();
+        // updatedPercentStaking();
       }
       function load() {
         // checkNotification();
